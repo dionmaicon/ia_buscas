@@ -20,21 +20,42 @@ class Grafo{
         int[][] estado_inicial = {{1,8,3},{0,5,4},{6,2,7}};
         
         //Objetivo 
-        int[][] estado_objetivo = {{1,2,3},{0,4,5},{6,7,8}};
+        int[][] estado_objetivo = {{4,0,5},{3,8,1},{6,2,7}};
+        
+        /**
+         4 0 5 
+
+         3 8 1 
+
+         6 2 7 
+         */
         
         No inicial = new No(null, 0, estado_inicial);
         
         Grafo grafo = new Grafo(inicial, estado_objetivo);
+     
         
-
+        grafo.nextStep();
+        grafo.nextStep();
+        grafo.nextStep();
+        grafo.nextStep();
+        grafo.nextStep();
+        grafo.nextStep();
+        grafo.nextStep();
+        grafo.nextStep();
+        grafo.nextStep();
+        grafo.nextStep();
+        grafo.nextStep();
+        
+        grafo.nextStep();
+        grafo.nextStep();
         grafo.nextStep();
         grafo.nextStep();
         
-        grafo.imprimirEstados();
+        //grafo.imprimirEstados();
+        
         
     }
-
-    
      //Retorna uma matriz com a o proximo estado, direcao Alto = 0, Direita = 1, Baixo = 2, Esquerda = 3
     int[][] calcularEstado(int vs[][], int direcao, Position position){
         int[][] v = new int[3][3];
@@ -85,8 +106,15 @@ class Grafo{
                 //Se v for diferente de null, posso criar o novo estado;
                 if( v != null){
                     
-                    if (!isDuplicada(v)) nos.addLast(new No(pai, step, v));
-                    if (isObjetivo(v)) System.out.println("Achou o objetivo");
+                    if (!isDuplicada(v)){
+                     No aux = new No(pai, step, v); 
+                     nos.addLast(aux);
+                        if (isObjetivo(v)){
+                           imprimirCaminho(aux);
+                           System.exit(0);
+                        }
+                    } 
+                     
                     
                 }
                 
@@ -125,14 +153,17 @@ class Grafo{
     }
 
     private boolean isObjetivo(int[][] v) {
-        
+        int cont = 0;
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 3; j++) {
-                if(this.objetivo[i][j] != v[i][j]) return false;
+                if(this.objetivo[i][j] == v[i][j]) cont++;
             }
         }
-        System.out.println("Achou o objetivo!");
-        return true;
+        if(cont == 9){
+            System.out.println("Achou o objetivo!");
+            return true;
+        }
+        return false;
     }
     /**Retorna true se a matriz já foi um estado anterior, falso caso contrario*/
     private boolean isDuplicada(int[][] v) {
@@ -151,6 +182,19 @@ class Grafo{
         
         return false;
 
+    }
+
+    private void imprimirCaminho(No aux) {
+        if(aux.getNivel() == 0) return;
+        imprimirCaminho(aux.getPai());
+
+        for (int i = 0; i < 3; i++) {
+            for (int j = 0; j < 3; j++) {
+                System.out.print(aux.getV()[i][j]+ " ");
+            }
+            System.out.println("");
+        }
+        System.out.println("");
     }
 
     private static class Position {
