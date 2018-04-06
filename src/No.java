@@ -9,18 +9,30 @@
  * @author dion
  */
 
-import java.util.LinkedList;
+import java.util.ArrayList;
+
 
 class No {
     private No pai;
-    private LinkedList<No> filhos;
+    private String nome;
+    private ArrayList<No> filhos;
     private int nivel;
     private int[][] v;
 
-    public No(No pai, int nivel, int[][] v) {
+    public No(No pai, int nivel, String nome,  int[][] v) {
         this.pai = pai;
+        this.nome = nome;
         this.nivel = nivel;
         this.v = v;
+        this.filhos = new ArrayList<>();
+    }
+
+    public String getNome() {
+        return nome;
+    }
+
+    public void setNome(String nome) {
+        this.nome = nome;
     }
 
     public No getPai() {
@@ -31,12 +43,15 @@ class No {
         this.pai = pai;
     }
 
-    public LinkedList<No> getFilhos() {
+    public ArrayList<No> getFilhos() {
+        if(filhos.isEmpty()){
+            return null;
+        }
         return filhos;
     }
 
-    public void setFilhos(LinkedList<No> filhos) {
-        this.filhos = filhos;
+    public void addFilho(No filho) {
+        this.filhos.add(filho);
     }
 
     public int getNivel() {
