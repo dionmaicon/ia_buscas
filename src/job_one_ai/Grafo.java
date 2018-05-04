@@ -6,7 +6,6 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import javax.swing.JOptionPane;
 
-
 class Grafo{
     private LinkedList<No> nos ;
     private int[][] objetivo;
